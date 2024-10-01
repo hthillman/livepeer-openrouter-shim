@@ -1,6 +1,6 @@
 {
   "name": "livepeer-openrouter-shim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "send LLM request to livepeer using openrouter syntax",
   "main": "index.js",
   "scripts": {

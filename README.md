@@ -20,10 +20,14 @@ const openrouterRequest: OpenRouterRequest = {
     num_responses: 1,
     stop_sequences: null,
 };
+const livepeerParams: LivepeerParams = {
+    stream: false,
+    history: []
+}
 
 const apiKey = "YOUR_LIVEPEER_API_KEY"; // Replace with your actual Livepeer API key
 const LivepeerProviderURL = "https://livepeer.studio/api/generate/llm";
-sendToLivepeer(openrouterRequest,LivepeerProviderURL, apiKey)
+sendToLivepeer(openrouterRequest,LivepeerProviderURL, livepeerParams, apiKey)
     .then(response => {
         console.log("Response from Livepeer:", response);
     })

@@ -16,19 +16,17 @@ exports.sendToLivepeer = void 0;
 const axios_1 = __importDefault(require("axios"));
 // Configuration for Livepeer API
 const LIVEPEER_API_URL = "https://livepeer.studio/api/generate/llm"; // Update with actual endpoint if different
-const openrouterToLivepeer = (request) => {
-    return {
-        prompt: request.input,
-        maxTokens: request.max_tokens || 100,
-        temperature: request.temperature || 0.7,
-        topP: request.top_p || 1.0,
-        n: request.num_responses || 1,
-        stop: request.stop_sequences || null,
-    };
+const defaultLivepeerParams = {
+    stream: false,
+    history: [],
+    system_msg: null
 };
-const sendToLivepeer = (request, LivepeerProviderURL, apiKey) => __awaiter(void 0, void 0, void 0, function* () {
+const openrouterToLivepeer = (request, livepeerParams) => {
+    return Object.assign({ model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct", prompt: request.input, maxTokens: request.max_tokens || 100, temperature: request.temperature || 0.7 }, livepeerParams);
+};
+const sendToLivepeer = (request_1, LivepeerProviderURL_1, ...args_1) => __awaiter(void 0, [request_1, LivepeerProviderURL_1, ...args_1], void 0, function* (request, LivepeerProviderURL, livepeerParams = defaultLivepeerParams, apiKey) {
     var _a, _b;
-    const livepeerRequest = openrouterToLivepeer(request);
+    const livepeerRequest = openrouterToLivepeer(request, livepeerParams);
     try {
         const response = yield axios_1.default.post(LivepeerProviderURL, livepeerRequest, {
             headers: {
