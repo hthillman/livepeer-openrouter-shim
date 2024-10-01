@@ -14,27 +14,41 @@ export interface OpenRouterRequest {
 
 
 interface LivepeerRequest {
+    model_id: string;
     prompt: string;
     maxTokens: number;
     temperature: number;
-    topP: number;
-    n: number;
-    stop?: string[] | null;
+    stream: Boolean;
+    history: string[] | []; 
+}
+interface LivepeerParams {
+    stream: Boolean;
+    history: string[] | [];
+
 }
 
-const openrouterToLivepeer = (request: OpenRouterRequest): LivepeerRequest => {
+const defaultLivepeerParams ={
+    stream: false,
+    history: [],
+    system_msg: null
+}
+
+const openrouterToLivepeer = (request: OpenRouterRequest, livepeerParams: LivepeerParams): LivepeerRequest => {
     return {
-        prompt: request.input,
-        maxTokens: request.max_tokens || 100,
-        temperature: request.temperature || 0.7,
-        topP: request.top_p || 1.0,
-        n: request.num_responses || 1,
-        stop: request.stop_sequences || null,
-    };
+            model_id: "meta-llama/Meta-Llama-3.1-8B-Instruct",
+            prompt: request.input,
+            maxTokens: request.max_tokens || 100,
+            temperature: request.temperature || 0.7,
+            // topP: request.top_p || 1.0,
+            // n: request.num_responses || 1,
+            // stop: request.stop_sequences || null,
+            ...livepeerParams
+    }
 };
 
-export const sendToLivepeer = async (request: OpenRouterRequest, LivepeerProviderURL:string, apiKey: string) => {
-    const livepeerRequest = openrouterToLivepeer(request);
+
+export const sendToLivepeer = async (request: OpenRouterRequest, LivepeerProviderURL:string, livepeerParams:LivepeerParams = defaultLivepeerParams, apiKey: string) => {
+    const livepeerRequest = openrouterToLivepeer(request, livepeerParams);
     
     try {
         const response = await axios.post(LivepeerProviderURL, livepeerRequest, {
