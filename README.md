@@ -22,8 +22,8 @@ const openrouterRequest: OpenRouterRequest = {
 };
 
 const apiKey = "YOUR_LIVEPEER_API_KEY"; // Replace with your actual Livepeer API key
-
-sendToLivepeer(openrouterRequest, apiKey)
+const LivepeerProviderURL = "https://livepeer.studio/api/generate/llm";
+sendToLivepeer(openrouterRequest,LivepeerProviderURL, apiKey)
     .then(response => {
         console.log("Response from Livepeer:", response);
     })
