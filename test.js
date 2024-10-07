@@ -1,16 +1,4 @@
-# Livepeer OpenRouter Shim
-
-A simple shim to send requests to Livepeer's LLM pipeline using OpenRouter parameters.
-
-## Installation
-
-```bash
-npm install livepeer-openrouter-shim
-```
-
-## Sample Usage
-```ts
-const sendToLivepeerWithOpenRouterFailover = require('livepeer-openrouter-shim').default;
+const sendToLivepeerWithOpenRouterFailover = require('./dist/index.js').default;
 
 const openrouterRequest = {
     input: "What is the capital of the United States?",
@@ -27,13 +15,12 @@ const livepeerParams = {
 const openRouterApiKey = ""
 
 const livepeerApiKey = ""; // Replace with your actual Livepeer API key
-const livepeerProviderURL = "https://livepeer.studio/api/generate/llm";
+const LivepeerProviderURL = "https://livepeer.studio/api/generate/llm";
 
-sendToLivepeerWithOpenRouterFailover(openrouterRequest,livepeerProviderURL, livepeerParams, livepeerApiKey, openRouterApiKey)
+sendToLivepeerWithOpenRouterFailover(openrouterRequest,LivepeerProviderURL, livepeerParams, livepeerApiKey, openRouterApiKey)
     .then(response => {
         console.log("Response from Livepeer:", response);
     })
     .catch(error => {
         console.error("An error occurred:", error.message);
     });
-```
